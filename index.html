@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="stylesheets/menu.css">
+</head>
+<body>
+    <div class="menu_container">
+        <form class="menu" method="get" action="/game.html">
+            <div class="game_type">
+                <input type="radio" id="game_101" name="game_number" class="game_number" value="101" data-gtm-form-interact-field-id="2">
+                <label class="game_btn" for="game_101"style='cursor: pointer;'>101</label>
+                <input type="radio" id="game_301" name="game_number" class="game_number" value="301" data-gtm-form-interact-field-id="2">
+                <label class="game_btn" for="game_301"style='cursor: pointer;'>301</label>
+                <input type="radio" id="game_501" name="game_number" class="game_number" value="501" data-gtm-form-interact-field-id="2">
+                <label class="game_btn" for="game_501"style='cursor: pointer;'>501</label>
+                <input type="radio" id="game_cricket" name="game_number" class="game_number" value="cricket" data-gtm-form-interact-field-id="2">
+                <label class="game_btn" for="game_cricket"style='cursor: pointer;'>Cricket</label>
+            </div>
+            <div class="start-sets">
+                <label>Sets</label>
+                <div class="input-dropdown">
+                    <i class="fa fa-angle-down"></i>
+                    <select id="amount_sets" name="amount_sets">
+                        <option value="none">No sets</option>
+                        <optgroup label="Best of "></optgroup>
+                        <option value="b 3">3 sets</option>
+                        <option value="b 5">5 sets</option>
+                        <option value="b 7">7 sets</option>
+                        <option value="b 9">9 sets</option>
+                        <!-- <option value="b 11">11 sets</option>
+                        <option value="b 13">13 sets</option>
+                        <option value="b 15">15 sets</option>
+                        <option value="b 17">17 sets</option>
+                        <option value="b 21">21 sets</option> -->
+                        <optgroup label="First to "></optgroup>
+                        <option value="f 1">1 set</option>
+                        <option value="f 2">2 sets</option>
+                        <option value="f 3">3 sets</option>
+                        <option value="f 4">4 sets</option>
+                        <option value="f 5">5 sets</option>
+                        <option value="f 6">6 sets</option>
+                        <option value="f 7">7 sets</option>
+                        <option value="f 8">8 sets</option>
+                        <option value="f 9">9 sets</option>
+                        <option value="f 10">10 sets</option>
+                        <option value="f 11">11 sets</option>
+                        <option value="f 12">12 sets</option>
+                        <option value="f 13">13 sets</option>
+                        <option value="f 14">14 sets</option>
+                        <option value="f 15">15 sets</option>
+                        <option value="f 16">16 sets</option>
+                        <option value="f 17">17 sets</option>
+                        <option value="f 18">18 sets</option>
+                        <option value="f 19">19 sets</option>
+                        <option value="f 20">20 sets</option>
+                        <option value="f 21">21 sets</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input start-leg" id="start-leg">
+                <label>Legs</label>
+                <div class="input-dropdown">
+                    <i class="fa fa-angle-down"></i>
+                    <select id="amount_legs" name="amount_legs">
+                        <optgroup label="Best of ">
+                        <option value="b 3">3 legs</option>
+                        <option value="b 5">5 legs</option>
+                        <option value="b 7">7 legs</option>
+                        <option value="b 9">9 legs</option>
+                        <!-- <option value="b 11">11 legs</option>
+                        <option value="b 13">13 legs</option>
+                        <option value="b 15">15 legs</option>
+                        <option value="b 17">17 legs</option>
+                        <option value="b 21">21 legs</option> -->
+                        </optgroup><optgroup label="First to ">
+                        <option value="f 1">1 leg</option>
+                        <option value="f 2">2 legs</option>
+                        <option value="f 3">3 legs</option>
+                        <option value="f 4">4 legs</option>
+                        <option value="f 5">5 legs</option>
+                        <option value="f 6">6 legs</option>
+                        <option value="f 7">7 legs</option>
+                        <option value="f 8">8 legs</option>
+                        <option value="f 9">9 legs</option>
+                        <option value="f 10">10 legs</option>
+                        <option value="f 11">11 legs</option>
+                        <option value="f 12">12 legs</option>
+                        <option value="f 13">13 legs</option>
+                        <option value="f 14">14 legs</option>
+                        <option value="f 15">15 legs</option>
+                        <option value="f 16">16 legs</option>
+                        <option value="f 17">17 legs</option>
+                        <option value="f 18">18 legs</option>
+                        <option value="f 19">19 legs</option>
+                        <option value="f 20">20 legs</option>
+                        <option value="f 21">21 legs</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="add_player">
+                <input id="input_player" type="text">
+                <button id="addButton">Add Player</button>
+            </div>
+            <div class="player_list"></div>
+            <input id="helperInput" type="text" name="players" value="test1 test2" style="display: none;">
+            <button type="submit" class="startButton" onclick="window.location.href='/game.html'">Játék indítása</button>
+        </form>
+    </div>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/menu.js"></script>
+    
+</body>
+</html>
