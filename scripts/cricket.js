@@ -56,8 +56,21 @@ class Cricket{
             const playerRow = table.querySelector(`#${player.name.replace(" ", "_")}`)
             for (const sector in player.sectors) {
                 const cell = playerRow.querySelector(`#${CSS.escape(sector)}`);
-                cell.innerHTML = player.sectors[sector];
+                cell.innerHTML = Math.min(3, player.sectors[sector]);
+                cell.parentElement.style.backgroundColor = player.sectors[sector] == 3 ? "red" : player.sectors[sector] == 2 ? "orange" : "greenyellow"
             }
+            playerRow.querySelector(`#extra${player.name}`).innerHTML = player.score;
         }
     }
+
+    static dart(player){
+        return;
+    }
+
+    /*TODO:
+         score count
+         winning screen
+         test
+         maybe save players
+    */
 }

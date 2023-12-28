@@ -10,6 +10,10 @@ class Player{
     }
 
     dart(v){
+        if (this.gameType == "cricket") {
+            Cricket.dart(this);
+            return;
+        }
         this.round.push(v);
         if (this.#eval() > this.score || this.#eval()+1 == this.score) { //bust
             this.round = [];
