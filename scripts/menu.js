@@ -1,6 +1,36 @@
 const menuButtons = document.getElementsByClassName("game_btn");
 const playerField = document.getElementById("input_player");
-refreshButtons(2)
+// refreshButtons(2)
+
+window.onload = function() {
+    Particles.init({
+      selector: '.background',
+      color: ["darkblue", "black"],
+      responsive: [   {
+        breakpoint: 768,
+        options: {
+          maxParticles: 200,
+          color: '#48F2E3',
+          connectParticles: false
+        }
+      }, {
+        breakpoint: 425,
+        options: {
+          maxParticles: 100,
+          connectParticles: true
+        }
+      }]
+      
+    });
+  };
+
+if (window.localStorage.getItem("players")) {
+    const temp = window.localStorage.getItem("players").split(",");
+    for (const player of temp) {
+        addPlayer(player);
+    }
+}
+
 
 for (let i = 0; i < menuButtons.length; i++) {
     const e = menuButtons[i];
@@ -28,11 +58,13 @@ function refreshButtons(ind) {
 }
 
 function addPlayer(name) {
+    let wasIn = false;
     if(inPlayers(name)){
         alert("Ilyen nevű játékos már van");
         return;
     }
     players.push(name);
+
 
     const playersDiv = document.getElementsByClassName('player_list')[0];
     const newContainer = document.createElement('div');
@@ -51,6 +83,8 @@ function addPlayer(name) {
 
     document.getElementById("helperInput").value = players.join("/");
     console.log(players);
+    window.localStorage.setItem("players", players)
+
     
 }
 
@@ -62,12 +96,13 @@ function removePlayer(ind) {
         node.parentNode.removeChild(node);
     }
     document.getElementById("helperInput").value = players.join("/");
+    
 
 }
 
 function inPlayers(name){
     for (const player of players) {
-        if(player.name == name){
+        if(player == name){
             return true
         }
     }

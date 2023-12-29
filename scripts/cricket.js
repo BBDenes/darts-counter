@@ -2,6 +2,8 @@ class Cricket{
     constructor(players){
         this.players = players
         this.init()
+        this.roundCount = 0;
+        this.allClaimedSectors = {"20":[], "19":[], "18":[], "17":[], "16":[], "15":[], "bull":[],}; 
     }
 
     init(){
@@ -49,6 +51,71 @@ class Cricket{
         <td class="extra cell"><h3 id="extra${player.name.replace(" ", "_")}">${player.score}</h3></td>
         </tr>`)
     }
+
+    static dart(player, v){
+        if(v.split(" ")[0] == "bull"){
+            var [type, value] = v.split(" ").reverse();
+        }else{
+            var [type, value] = v.split(" ");
+        }
+        let addValue = 0;
+
+        if (!player.sectors.hasOwnProperty(value)) {
+            player.round.push(v)
+            if (player.round.length == 3) {
+                nextPlayer();
+                player.round = [];
+            }
+            return;
+        }
+
+        switch (type) {
+            case "outer":
+                addValue = 1;
+                break;
+            case "inner":
+                addValue = 2;
+                break;
+            case "t":
+                addValue = 3;
+                break;
+            case "d":
+                addValue = 2;
+                break;
+                
+            default:
+                addValue = 1;
+                break;
+        }
+        
+        let point = value == "bull" ? 25 : value;
+
+        if (player.sectors[String(value)] < 3 && player.sectors[String(value)] + addValue >= 3) {
+            player.score += (player.sectors[String(value)]+addValue - 3) * Number(point);
+            gameLogic.allClaimedSectors[String(value)].push(player.name)
+        }
+        
+        if (player.sectors[String(value)] >= 3 && gameLogic.canAwardPoint(player.name, String(value))) {
+            player.score += addValue * Number(point)
+           if (!gameLogic.allClaimedSectors[value].includes(player.name)) {
+             gameLogic.allClaimedSectors[String(value)].push(player.name)
+           }
+    
+        }
+        player.sectors[String(value)] += addValue;
+        player.round.push(v);
+        if (player.round.length == 3) {
+            nextPlayer();
+            player.throws.push(player.round);
+            player.round = [];
+        }
+        if (player.isWinning()) {
+            winGame(player);
+            return;
+        }
+        gameLogic.refresh();
+        
+    }
     
     refresh(){
         const table = document.querySelector(".playersTable");
@@ -56,21 +123,60 @@ class Cricket{
             const playerRow = table.querySelector(`#${player.name.replace(" ", "_")}`)
             for (const sector in player.sectors) {
                 const cell = playerRow.querySelector(`#${CSS.escape(sector)}`);
+                if (!cell) {
+                    return;
+                }
                 cell.innerHTML = Math.min(3, player.sectors[sector]);
-                cell.parentElement.style.backgroundColor = player.sectors[sector] == 3 ? "red" : player.sectors[sector] == 2 ? "orange" : "greenyellow"
+                cell.parentElement.style.backgroundColor = player.sectors[sector] >= 3 ? "red" : player.sectors[sector] == 2 ? "orange" : "greenyellow"
             }
+            console.log(player.score);
             playerRow.querySelector(`#extra${player.name}`).innerHTML = player.score;
+            
         }
     }
 
-    static dart(player){
-        return;
+    undo(player){
+        const pop = player.round.pop().split(" ");
+        const value = pop[1];
+        switch (pop[0]) {
+            case "t":
+                player.sectors[String(value)]-= 3;
+                break;
+            case "d":
+                player.sectors[String(value)]-= 2;
+                break;
+                
+            default:
+                player.sectors[String(value)]-= 1;
+                break;
+        }
+        if (player.sectors[String(value)] < 3) {
+            if (this.allClaimedSectors[value].includes(player.name)) {
+                const popped =this.allClaimedSectors[value].splice(this.allClaimedSectors[value].indexOf(player.name), 1);
+                console.log(popped)
+            }
+        }
+        refreshRoundPoints(player);
+        gameLogic.refresh();
     }
 
+    canAwardPoint(player, sector){
+        if (this.allClaimedSectors[sector].length == 0) { //senki se dobta meg
+            return true
+        }else{ //valaki megdobta
+            if (this.allClaimedSectors[sector].length == 1 && this.allClaimedSectors[sector].includes(player)) { // csak mi dobtuk meg
+                return true
+            }else{
+                return false
+            }
+        }
+    }
+
+    
+
     /*TODO:
-         score count
          winning screen
          test
-         maybe save players
+        
     */
 }

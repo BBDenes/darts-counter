@@ -59,3 +59,28 @@ table .leg, table .set, table .score, .cell{
     height: 30px;
     background-color: red;
 }
+
+.winnerContainer{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    display:none;
+    justify-content: center;
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.winner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    aspect-ratio: 1;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 50px;
+}

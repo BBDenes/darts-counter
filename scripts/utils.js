@@ -9,12 +9,6 @@ let game = [
 let currentPlayerIndex = 0;
 
 
-const needToWinBestOf = {
-    3: 2,
-    5: 3,
-    7: 4,
-    9: 7,
-}
 
 function parseURL(url){
     const raw =  url.split("&");
@@ -22,9 +16,9 @@ function parseURL(url){
     console.log(gameType)
     const setType = {type: raw[1].split("=")[1].split("+")[0], amount: Number(raw[1].split("=")[1].split("+")[1])};
     const legType = {type: raw[2].split("=")[1].split("+")[0], amount: Number(raw[2].split("=")[1].split("+")[1])};
-    if (raw[3] == undefined) {
-        raw[3] = "players=Player1%2FPlayer2%2FPlayer3"
-    }
+    // if (raw[3] == undefined) {
+    //     raw[3] = "players=Player1%2FPlayer2%2FPlayer3"
+    // }
     const rawPlayers = raw[3].split("=")[1].split("%2F");
     const playerList = rawPlayers.map(element => {
         return element.replace("+", " ");
@@ -48,7 +42,12 @@ function refreshRoundPoints(player) {
     document.getElementById('currentPoints').innerHTML = player.round.join(", ")
 }
 
-function undo(player){
+function undo(){
+    const player = game[currentPlayerIndex]; 
+    if (gameType == "cricket") {
+        gameLogic.undo(player);
+        return;
+    }
     game[currentPlayerIndex].round.pop();
     refreshRoundPoints(game[currentPlayerIndex])
 }
@@ -58,7 +57,11 @@ function nextPlayer() {
     // const div = document.querySelector(".current");
 
     // div.style.translateY()
-    refreshNormal(setType)
+    if (gameType != "cricket") {
+        refreshNormal(setType)
+    }else{
+        gameLogic.refresh();
+    }
 
     currentPlayerIndex++;
     if (currentPlayerIndex >= game.length) {
@@ -111,19 +114,13 @@ function winSet(winner) {
         }
         winner.sets++;
     }else if(setType.type == 'b'){
-        game.forEach(player => {test += Number(player.sets)});
         let remainingSets = setType.amount - setsPlayed;
         if (winner.sets +1 == setType.amount || winner.sets + 1 > remainingSets) {
             winGame(winner);
             return;
         }
         winner.sets++;
-        for (const player of game) {
-            let max = 0;
-            if (condition) {
-                
-            }
-        }
+        
     }
     
     for (const player of game) {
@@ -152,4 +149,12 @@ function checkDraw(type){
         console.log("draw")
         return null
     }
+}
+
+function winGame(winner){
+    const winnerContainer = document.querySelector(".winnerContainer");
+    const winnerText = document.querySelector(".winnerPlayer")
+    winnerContainer.style.display = "flex";
+    winnerText.innerHTML = winner.name;
+    inGame = false
 }

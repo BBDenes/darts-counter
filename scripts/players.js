@@ -7,11 +7,13 @@ class Player{
         this.score = this.gameType == "cricket"? 0 : Number(this.gameType);
         this.round = [];
         this.sectors = this.gameType == "cricket"? {} : null;
+        this.throwNumber = 0;
+        this.throws = [];
     }
 
     dart(v){
         if (this.gameType == "cricket") {
-            Cricket.dart(this);
+            Cricket.dart(this, v);
             return;
         }
         this.round.push(v);
@@ -84,6 +86,20 @@ class Player{
         console.log(sum);
         console.log(this.score == sum);
         return sum;
+    }
+
+    isWinning(){
+        let count = 0;
+        for (const score in this.sectors) {
+            if (this.sectors[score] >= 3) {
+                count ++;
+            }
+        }
+        if (count == 7) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //todo: 
