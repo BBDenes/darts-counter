@@ -34,7 +34,8 @@ class Cricket{
             table.innerHTML += this.#playerTemplate(player)
         }
         document.querySelector(".player").getElementsByTagName("td")[0].innerHTML += `<div class="current"></div>`;
-        
+        refreshAvg();
+
     }
 
     #playerTemplate(player){
@@ -175,9 +176,4 @@ class Cricket{
 
     
 
-    /*TODO:
-         winning screen
-         test
-        
-    */
 }

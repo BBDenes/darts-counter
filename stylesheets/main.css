@@ -3,6 +3,7 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #16294a;
+    text-align: center;
 }
 h1{margin-top:0}
 
@@ -27,9 +28,14 @@ h1{margin-top:0}
     margin-bottom: 2rem;
 }
 
+.players-container{
+    margin-left: 3rem;
+}
+
 table, th, td {
-    /* border: 2px solid black; */
+    /* border: 2px solid black;  */
     border-collapse: collapse;
+    text-align: left;
 }
 
 table .leg, table .set, table .score, .cell{
@@ -57,7 +63,7 @@ table .leg, table .set, table .score, .cell{
 .current{
     width: 30px;
     height: 30px;
-    background-color: red;
+    background-color: rgb(0, 255, 42);
 }
 
 .checkout{
@@ -129,6 +135,10 @@ table .leg, table .set, table .score, .cell{
 .fl-table thead th:nth-child(odd) {
     color: #ffffff;
     background: #324960;
+}
+.fl-table th:nth-child(odd) {
+    color: #ffffff;
+    background: #434547;
 }
 
 .fl-table tr:nth-child(even) {

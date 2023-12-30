@@ -124,15 +124,19 @@ class Player{
         copy.forEach( num => {
             sum += num;
         })
-        return Math.floor((sum/copy.length) *100)/100;
+        if (isNaN(Math.floor((sum/copy.length) *100)/100)) {
+            return "-"
+        }else{
+            return Math.floor((sum/copy.length) *100)/100;
+        }
     }
     
     avg3(){
-        let roundAvgs = [];
-        for (const round of this.throws) {
-            roundAvgs.push(this.avg1(round))
+        if (isNaN(this.avg1()*3)) {
+            return "-"
+        }else{
+            return this.avg1()*3
         }
-        return Math.random() * 60;
 
     }
 
@@ -141,7 +145,7 @@ class Player{
         <tr class="${this.name}">
         <th class="name">${this.name}</th>
         <th class="1dartAvg">${this.avg1()}</th>
-        <th class = "3dartAvg">${this.avg1()*3}</th>
+        <th class = "3dartAvg">${this.avg3()}</th>
         </tr>`)
     }
 
