@@ -193,11 +193,21 @@ function resetLeg() {
     for (const player of game) {
         player.resetScore();
     }
+    if (gameType != "cricket") {
+        refreshNormal(setType)
+    }else{
+        gameLogic.refresh();
+    }
 }
 
 function resetSet() {
     for (const player of game) {
         player.resetScore()
         player.resetLegs();
+    }
+    if (gameType != "cricket") {
+        refreshNormal(setType)
+    }else{
+        gameLogic.refresh();
     }
 }

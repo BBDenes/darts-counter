@@ -87,6 +87,7 @@ class Player{
     }
 
     getCheckout(score){
+        let ind = currentPlayerIndex;
         if (score < 171) {
             let len = 0;
             let string = "";
@@ -96,8 +97,8 @@ class Player{
             }else{
                 len = 0;
             }
-            document.querySelector(".checkout").innerHTML = string;
-            document.querySelector(".checkout").style.width = len;
+            document.getElementsByClassName("checkout")[ind].innerHTML = string;
+            document.getElementsByClassName("checkout")[ind].style.width = len;
         }else{
             return
         }
