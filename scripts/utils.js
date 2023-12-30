@@ -34,6 +34,7 @@ function template(player){
         <td class="set"><p class="set${player.name.replace(" ", "_")}">${player.sets}</p></td>
         <td class="leg"><p class="leg${player.name.replace(" ", "_")}">${player.legs}</p></td>
         <td class="score"><h3 id="score${player.name.replace(" ", "_")}">${player.score}</h3></td>
+        <td> <h3 class="checkout">t20</h3> </td>
         </tr>`
     );
 }
@@ -75,6 +76,10 @@ function nextPlayer() {
     console.log(currentPlayerIndex * rowHeight);
     box.style.transform = `translateY(${currentPlayerIndex * rowHeight}px)`;
     
+    if (game[currentPlayerIndex].score <171) {
+        game[currentPlayerIndex].getCheckout(game[currentPlayerIndex].score);
+    }
+
 }
 
 function winLeg(winner) {
@@ -157,4 +162,29 @@ function winGame(winner){
     winnerContainer.style.display = "flex";
     winnerText.innerHTML = winner.name;
     inGame = false
+}
+
+function toNum(array){
+    let throws = []
+    for (const t of array) {
+        if(t.split(" ")[0] == "t") throws.push( 3*Number(t.split(" ")[1]))
+        else if(t.split(" ")[0] == "d") throws.push( 2*Number(t.split(" ")[1]))
+        else if(t.split(" ")[0] == "s") throws.push( Number(t.split(" ")[1]))
+        else if(t.split(" ")[0] == "bull"){
+            if (t.split(" ")[1] == "inner") {
+                throws.push(50)
+            }else{
+                throws.push(25)
+            }
+        } 
+    }
+    return throws;
+}
+
+function refreshAvg(){
+    const body = document.querySelector(".avgBody");
+    body.innerHTML = "";
+    for (const player of game) {
+        body.innerHTML += player.avgTemplate()
+    }
 }

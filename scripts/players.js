@@ -17,7 +17,13 @@ class Player{
             return;
         }
         this.round.push(v);
+
+        if (this.score - this.#eval() < 171 || this.score <171) {
+            this.getCheckout(this.score);
+        }
+
         if (this.#eval() > this.score || this.#eval()+1 == this.score) { //bust
+            this.throws.push(toNum(this.round));
             this.round = [];
             nextPlayer();
             return;
@@ -27,10 +33,12 @@ class Player{
             if (this.round[this.round.length-1][0] == "d" || this.round[this.round.length-1][0] == "bull") { //megdobta
                 winLeg(this);
                 nextPlayer()
+                this.throws.push(toNum(this.round));
                 this.round = [];
                 return;
             }else{
                 nextPlayer();
+                this.throws.push(toNum(this.round));
                 this.round = [];
                 return
             }
@@ -38,6 +46,7 @@ class Player{
         if (this.round.length == 3) { // megdobta a 3 nyilat
             this.score -= this.#eval();
             nextPlayer();
+            this.throws.push(toNum(this.round));
             this.round = [];
             return
         }
@@ -72,20 +81,26 @@ class Player{
                     sum+= Number(point[1]);
                 break;
             }
-            // if (point[0] == "miss") {
-            //     sum += 0;
-            // }else if (point[0] == "bull") {
-            //     sum += point[1] == "inner" ? 50:25
-            // }
-            // else if (point[0] == "t") {
-            //     sum += Number(point[1]) *3;
-            // }else if(point[0] == "d") {
-            //     sum += Number(point[1]) *2;   
-            // }else sum+= Number(point[1]);
+            
         }
-        console.log(sum);
-        console.log(this.score == sum);
         return sum;
+    }
+
+    getCheckout(score){
+        if (score < 171) {
+            let len = 0;
+            let string = "";
+            if (checkout.hasOwnProperty(String(score))) {
+                len = String(checkout[score].length * 2.5) + "rem";
+                string =  checkout[String(score)].join(" ");
+            }else{
+                len = 0;
+            }
+            document.querySelector(".checkout").innerHTML = string;
+            document.querySelector(".checkout").style.width = len;
+        }else{
+            return
+        }
     }
 
     isWinning(){
@@ -100,6 +115,34 @@ class Player{
         } else {
             return false;
         }
+    }
+
+    avg1(){
+        let avg = 0;
+        let copy = this.throws.flat();
+        let sum = 0;
+        copy.forEach( num => {
+            sum += num;
+        })
+        return Math.floor((sum/copy.length) *100)/100;
+    }
+    
+    avg3(){
+        let roundAvgs = [];
+        for (const round of this.throws) {
+            roundAvgs.push(this.avg1(round))
+        }
+        return Math.random() * 60;
+
+    }
+
+    avgTemplate(){
+        return(`
+        <tr class="${this.name}">
+        <th class="name">${this.name}</th>
+        <th class="1dartAvg">${this.avg1()}</th>
+        <th class = "3dartAvg">${this.avg1()*3}</th>
+        </tr>`)
     }
 
     //todo: 

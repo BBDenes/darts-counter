@@ -49,6 +49,11 @@ function refreshNormal(setType) {
         box.style.transform = `translateY(${currentPlayerIndex * rowHeight}px)`;
     }
 
+    refreshAvg();
+    for (const player of game) {
+        player.getCheckout(player.score)
+    }
+
 }
 
 function gameHeaderText(setType) {

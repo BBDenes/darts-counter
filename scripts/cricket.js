@@ -133,6 +133,7 @@ class Cricket{
             playerRow.querySelector(`#extra${player.name}`).innerHTML = player.score;
             
         }
+        refreshAvg();
     }
 
     undo(player){
