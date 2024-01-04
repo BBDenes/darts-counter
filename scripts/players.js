@@ -9,6 +9,7 @@ class Player{
         this.sectors = this.gameType == "cricket"? {} : null;
         this.throwNumber = 0;
         this.throws = [];
+        this.checkout = [];
     }
 
     dart(v){
@@ -19,7 +20,7 @@ class Player{
         this.round.push(v);
 
         if (this.score - this.#eval() < 171 || this.score <171) {
-            this.getCheckout(this.score);
+            this.getCheckout(this.score - this.#eval());
         }
 
         if (this.#eval() > this.score || this.#eval()+1 == this.score) { //bust
@@ -30,7 +31,7 @@ class Player{
         }
 
         if(this.#eval() == this.score ){ //pontosan annyi
-            if (this.round[this.round.length-1][0] == "d" || this.round[this.round.length-1][0] == "bull") { //megdobta
+            if (this.round[this.round.length-1][0] == "d" || (this.round[this.round.length-1].split(" ")[0] == "bull" && this.round[this.round.length-1].split(" ")[1] == "inner")) { //megdobta
                 winLeg(this);
                 nextPlayer()
                 this.throws.push(toNum(this.round));
@@ -92,13 +93,10 @@ class Player{
             let len = 0;
             let string = "";
             if (checkout.hasOwnProperty(String(score))) {
-                len = String(checkout[score].length * 2.5) + "rem";
                 string =  checkout[String(score)].join(" ");
-            }else{
-                len = 0;
             }
-            document.getElementsByClassName("checkout")[ind].innerHTML = string;
-            document.getElementsByClassName("checkout")[ind].style.width = len;
+            this.checkout = string;
+            refreshCheckout();
         }else{
             return
         }
@@ -151,8 +149,19 @@ class Player{
     }
 
     //todo: 
-    //kiszálló példa eh
-    //winner screen
-    //krikett
+    /* 
+        Lehessen állítani ki kezdjen
+        Körök végén nem váltja át a kezdő játékost
+        Számok "miss"-t adjanak
+        Egyesével vonja le az egyes dobások értékét
+        kb.9 nyíl után nem vált játékost = 
+        cricket max. 20 kör
+        cricket reset
+        név nélküli ember
+
+        (A táblának lehet olyan kéne keresni ahol kicsit vastagabb a tripla és dupla szektor)
+        (nagyobb eredményjelző)
+          
+    */
 
 }

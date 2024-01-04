@@ -211,3 +211,12 @@ function resetSet() {
         gameLogic.refresh();
     }
 }
+
+function refreshCheckout(){
+    const divs = document.getElementsByClassName("checkout")
+    for (let i = 0; i < divs.length; i++) {
+        const div = divs[i];
+        div.innerHTML = game[i].checkout;
+        div.style.width = checkout.hasOwnProperty(String(game[i].score)) ? String(checkout[String(game[i].score)].length * 2.5) + "rem" : 0;
+    }
+}
